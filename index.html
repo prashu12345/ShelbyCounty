@@ -20,11 +20,10 @@
             padding: 15px;
             margin: 5px;
         }
-       
         .section {
             margin: 10px auto;
             padding: 20px;
-            width: 100%;
+            width: 100%; /* Full width, no cap */
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -52,12 +51,11 @@
             background-color: #c9302c;
         }
         #tableauViz1 {
-    width: 100vw; /* Full viewport width */
-    max-width: 100%; /* Prevents cutting */
-    height: 2295px; /* Keep your current height */
-    overflow: hidden; /* Prevents unnecessary scrollbars */
-}
-
+            width: 100%; /* Matches parent container */
+            height: 2295px; /* Keep your original height */
+            overflow-x: auto; /* Allows horizontal scrolling if needed */
+            overflow-y: hidden; /* Prevents vertical scrollbars */
+        }
     </style>
 </head>
 <body>
@@ -75,13 +73,13 @@
 
             function initViz1() {
                 var containerDiv = document.getElementById("tableauViz1");
-                var vizUrl = "https://public.tableau.com/views/Book2_17416164467090/Dashboard1?:toolbar=no";
+                var vizUrl = "https://public.tableau.com/views/Book2_17416164467090/Dashboard1?:toolbar=no&:display_count=n&:origin=viz_share_link";
 
                 var options = {
                     hideTabs: true,
                     hideToolbar: true,
-                    width: "100%",
-                    height: "2295px",
+                    width: "100%", /* Full width of container */
+                    height: "2295px", /* Keep your original height */
                     onFirstInteractive: function () {
                         console.log("Tableau Dashboard Loaded");
                     }
@@ -90,27 +88,19 @@
                 viz = new tableau.Viz(containerDiv, vizUrl, options);
             }
 
-            // Function to update current time
-            function updateTime() {
-                var now = new Date();
-                var formattedTime = now.toLocaleString();
-                document.getElementById("current-time").innerText = "Report generated on: " + formattedTime;
-            }
-
-            // Function to download the Tableau visualization as a PDF with "Unspecified" Page Size
+            // Function to download the Tableau visualization as a PDF
             function downloadTableauPDF() {
                 if (viz) {
                     alert("Ensure 'Unspecified' is selected in the Page Size dropdown before exporting.");
-                    viz.showExportPDFDialog(); // Opens Tableau's built-in PDF export dialog
+                    viz.showExportPDFDialog();
                 } else {
                     alert("Tableau visualization is still loading. Please try again.");
                 }
             }
 
-            // Load Tableau and update time when the page loads
+            // Load Tableau when the page loads
             window.onload = function () {
                 initViz1();
-                updateTime();
             };
         </script>
     </div>
