@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temporal Analysis - Alcohol Impaired Report</title>
+    <title>Alcohol Impaired Report</title>
     <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
     <style>
         body {
@@ -12,112 +12,107 @@
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
+            text-align: center;
         }
         h1 {
-            text-align: center;
             background-color: #333;
             color: white;
             padding: 15px;
-            margin: 0;
+            margin: 5px;
         }
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #444;
-            padding: 10px 0;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1.1em;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        nav a:hover {
-            background-color: #555;
-        }
+       
         .section {
-            margin: 40px auto;
+            margin: 10px auto;
             padding: 20px;
-            width: 100%;
-            max-width: 100%;
+            width: 90%;
+            max-width: 1300px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-            display: block;
-            margin: 0 auto 15px auto;
-        }
-        .analysis {
-            padding: 15px;
-            background-color: #f4f4f4;
-            border-radius: 5px;
-            font-size: 1em;
         }
         .footer {
             text-align: center;
             margin-top: 30px;
             font-size: 0.9em;
-            color: gray;
+            color: white;
             padding: 10px 0;
             background-color: #333;
+        }
+        .pdf-button {
+            background-color: #d9534f;
             color: white;
+            font-size: 1em;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 10px 15px;
+        }
+        .pdf-button:hover {
+            background-color: #c9302c;
         }
     </style>
 </head>
 <body>
+
     <h1>Alcohol Impaired Report - County Level Analysis</h1>
+  
+    <!-- PDF Download Button -->
+    <button class="pdf-button" onclick="downloadTableauPDF()">Download Tableau Report as PDF</button>
 
-    <!-- Navigation Menu -->
-    
-
-    <!-- Section 1: Total Crashes by Year -->
+    <!-- Tableau Dashboard -->
     <div id="county-level-map" class="section">
-        <div id="tableauViz1"></div> <!-- Unique Container for First Tableau Visualization -->
+        <div id="tableauViz1"></div> <!-- Tableau Visualization Container -->
         <script>
+            var viz; // Global variable to store Tableau instance
+
             function initViz1() {
                 var containerDiv = document.getElementById("tableauViz1");
-                var vizUrl = 
-                "https://public.tableau.com/views/Book2_17416164467090/Dashboard1?:toolbar=no";
-                
+                var vizUrl = "https://public.tableau.com/views/Book2_17416164467090/Dashboard1?:toolbar=no";
+
                 var options = {
                     hideTabs: true,
                     hideToolbar: true,
-                    toolbar: "no",
-                    width: "1050px",
-                    height: "2700px"
+                    width: "1800%",
+                    height: "2295px",
+                    onFirstInteractive: function () {
+                        console.log("Tableau Dashboard Loaded");
+                    }
                 };
 
-                new tableau.Viz(containerDiv, vizUrl, options);
+                viz = new tableau.Viz(containerDiv, vizUrl, options);
             }
 
-               // Load all visualizations when the page is fully loaded
-               window.onload = function () {
-                initViz1(); // Initialize the first visualization
-                 // Initialize the third visualization
+            // Function to update current time
+            function updateTime() {
+                var now = new Date();
+                var formattedTime = now.toLocaleString();
+                document.getElementById("current-time").innerText = "Report generated on: " + formattedTime;
+            }
+
+            // Function to download the Tableau visualization as a PDF with "Unspecified" Page Size
+            function downloadTableauPDF() {
+                if (viz) {
+                    alert("Ensure 'Unspecified' is selected in the Page Size dropdown before exporting.");
+                    viz.showExportPDFDialog(); // Opens Tableau's built-in PDF export dialog
+                } else {
+                    alert("Tableau visualization is still loading. Please try again.");
+                }
+            }
+
+            // Load Tableau and update time when the page loads
+            window.onload = function () {
+                initViz1();
+                updateTime();
             };
-
         </script>
-        <div class="analysis">
-           
-        </div>
     </div>
-
-    
-       
-        
-
-    
 
     <!-- Footer -->
     <div class="footer">
-        © 2024 Alcohol-impaired Report. All rights reserved.
+        © 2024 Alcohol-Impaired Report. All rights reserved.
     </div>
+
 </body>
 </html>
