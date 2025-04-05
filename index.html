@@ -37,20 +37,7 @@
             padding: 10px 0;
             background-color: #333;
         }
-        .pdf-button {
-            background-color: #d9534f;
-            color: white;
-            font-size: 1em;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin: 10px 15px;
-        }
-        .pdf-button:hover {
-            background-color: #c9302c;
-        }
+        
         #tableauViz1 {
             width: 100%; /* Matches parent container */
             height: 2295px; /* Keep your original height */
@@ -63,9 +50,7 @@
 
     <h1>Alcohol Impaired Report - County Level Analysis</h1>
   
-    <!-- PDF Download Button -->
-    <button class="pdf-button" onclick="downloadTableauPDF()">Download Tableau Report as PDF</button>
-
+    
     <!-- Tableau Dashboard -->
     <div id="county-level-map" class="section">
         <div id="tableauViz1"></div> <!-- Tableau Visualization Container -->
